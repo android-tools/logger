@@ -32,6 +32,7 @@ public class Logger {
 	private static final String ANDROID_LOG_STRING_FORMAT = "%02d-%02d %02d:%02d:%02d.%03d %04d %04d %s %s: %s";
 
 	private static String sLogFilePath;
+    private static long sMaxFileSize = DEFAULT_MAX_LOG_SIZE;
 	private static boolean sNeedPrintToFile = false;
 
 	static final Map<String, String> mPhoneInfoMap = new HashMap<>();
@@ -68,7 +69,7 @@ public class Logger {
 		fs.setPath(path);
 
 		String dirPath = fs.getParentDir();
-		if(fs.exists() && fs.getSize()> DEFAULT_MAX_LOG_SIZE) {
+		if(fs.exists() && fs.getSize()> sMaxFileSize) {
 
 			String filename = fs.getName();
 			String fileNameBody = filename.substring(0, filename.lastIndexOf("."));
@@ -89,6 +90,10 @@ public class Logger {
 		}
 		return path;
 	}
+
+    public static void setMaxFileSize(long maxFileSize) {
+        sMaxFileSize = maxFileSize;
+    }
 
 	public static void printPhoneInfo() {
 
@@ -115,8 +120,12 @@ public class Logger {
 		printLogString(logLevel, tag, message, null);
 	}
 
+	protected static boolean needPrintLog() {
+		return true;
+	}
+
 	private static void printLogString(LogLevel logLevel, String tag, String message, Throwable thr) {
-		if(!BuildConfig.DEBUG)
+		if(!needPrintLog())
 			return;
 
 		if( thr != null )

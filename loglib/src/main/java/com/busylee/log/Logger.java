@@ -35,6 +35,7 @@ public class Logger {
     private static long sMaxFileSize = DEFAULT_MAX_LOG_SIZE;
 	private static boolean sNeedPrintToFile = false;
     private static boolean sOneFile = false;
+    static boolean sWorldPublicFile = true;
 
 	static final Map<String, String> mPhoneInfoMap = new HashMap<>();
 
@@ -60,13 +61,27 @@ public class Logger {
         sOneFile = true;
     }
 
+    public static void setLogFilePrivate() {
+        sWorldPublicFile = false;
+    }
+
 	public static void setFilePath(String path) {
         sLogFilePath = chooseLogPath(path);
+        prepareFile(sLogFilePath);
         sNeedPrintToFile = true;
 	}
 
     public static String getFilePath() {
         return sLogFilePath;
+    }
+
+    private static void prepareFile(String path) {
+        FileSystem fileSystem = new FileSystem(path);
+        if(sWorldPublicFile) {
+            fileSystem.setPublic();
+        } else {
+            fileSystem.setPrivate();
+        }
     }
 
 	private static String chooseLogPath(String path) {

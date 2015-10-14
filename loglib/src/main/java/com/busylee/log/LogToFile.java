@@ -3,6 +3,8 @@ package com.busylee.log;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.busylee.file.FileSystem;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -16,6 +18,7 @@ import java.util.concurrent.Executors;
  */
 public class LogToFile {
 
+    private static final String TAG = "LogToFile";
 	private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
 
 	public static void printToFile(final String path, final String str) {
@@ -41,27 +44,29 @@ public class LogToFile {
 	private static File GetFileFromPath(String path) {
 		boolean ret;
 		if (TextUtils.isEmpty(path)) {
-			Log.e("Error", "The path of Log file is Null.");
+			Log.e(TAG, "[Error] The path of Log file is Null.");
 			return null;
 		}
+
 		File file = new File(path);
 		if (file.exists()) {
-			if (! file.canWrite())
-				Log.e("Error", "The Log file can not be written.");
+			if (!file.canWrite())
+				Log.e(TAG, "[Error] The Log file can not be written.");
 		} else {
 			//create the log file
 			try {
+                //todo need to set correct access mode
 				ret = file.createNewFile();
 				if (ret) {
-					Log.i("Success", "The Log file was successfully created! -" + file.getAbsolutePath());
+					Log.i(TAG , "[Success] The Log file was successfully created! -" + file.getAbsolutePath());
 				} else {
-					Log.i("Success", "The Log file exist! -" + file.getAbsolutePath());
+					Log.i(TAG, "[Success] The Log file exist! -" + file.getAbsolutePath());
 				}
 				if (!file.canWrite()) {
-					Log.e("Error", "The Log file can not be written.");
+					Log.e(TAG, "Error [Error] The Log file can not be written.");
 				}
 			} catch (IOException e) {
-				Log.e("Error", "Failed to create The Log file.");
+				Log.e(TAG, "[Error] Failed to create The Log file.");
 				e.printStackTrace();
 			}
 		}

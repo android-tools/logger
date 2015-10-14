@@ -84,4 +84,8 @@ public interface IFileSystem {
 	String getMimeType();
 
 	void clearFile();
+
+	boolean setPublic();
+
+	boolean setPrivate();
 }

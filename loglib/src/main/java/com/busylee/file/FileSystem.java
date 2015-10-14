@@ -23,6 +23,14 @@ public class FileSystem implements IFileSystem {
 	/** Файл */
 	protected File mFile;
 
+    public FileSystem() {
+
+    }
+
+    public FileSystem(String path) {
+        mFile = new File(path);
+    }
+
 	@Override
 	public void setPath(String path) {
 		mFile = new File(path);
@@ -192,4 +200,26 @@ public class FileSystem implements IFileSystem {
                 createDirectoryRecursive();
         }
 	}
+
+    @Override
+    public boolean setPublic() {
+        if(exists()) {
+            return mFile.setReadable(true, false);
+        } else {
+            Logger.warning(TAG, ":setPublic() file does not exists");
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean setPrivate() {
+        if(exists()) {
+            return mFile.setReadable(false, false);
+        } else {
+            Logger.warning(TAG, ":setPublic() file does not exists");
+        }
+
+        return false;
+    }
 }

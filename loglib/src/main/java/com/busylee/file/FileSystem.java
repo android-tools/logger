@@ -181,4 +181,15 @@ public class FileSystem implements IFileSystem {
 	public String getMimeType() {
 		return Mime.getMimeType(mFile.getName());
 	}
+
+	@Override
+	public void clearFile() {
+        if(exists()) {
+            deleteFile();
+        } else {
+            setPath(getParentDir());
+            if(!exists())
+                createDirectoryRecursive();
+        }
+	}
 }

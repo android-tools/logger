@@ -34,6 +34,7 @@ public class Logger {
 	private static String sLogFilePath;
     private static long sMaxFileSize = DEFAULT_MAX_LOG_SIZE;
 	private static boolean sNeedPrintToFile = false;
+    private static boolean sOneFile = false;
 
 	static final Map<String, String> mPhoneInfoMap = new HashMap<>();
 
@@ -55,6 +56,10 @@ public class Logger {
 		}
 	}
 
+    public static void setOneFileMode() {
+        sOneFile = true;
+    }
+
 	public static void setFilePath(String path) {
         sLogFilePath = chooseLogPath(path);
         sNeedPrintToFile = true;
@@ -72,18 +77,22 @@ public class Logger {
 		if(fs.exists() && fs.getSize()> sMaxFileSize) {
 
 			String filename = fs.getName();
-			String fileNameBody = filename.substring(0, filename.lastIndexOf("."));
-			String fileNameExtension = filename.substring(filename.lastIndexOf("."));
+            if(!sOneFile) {
+                String fileNameBody = filename.substring(0, filename.lastIndexOf("."));
+                String fileNameExtension = filename.substring(filename.lastIndexOf("."));
 
-			int k = 2;
-			while (true){
-				String newPath = String.format("%s(%d)%s", fileNameBody, k++, fileNameExtension);
-				fs.setPath(dirPath, newPath);
-				if(!fs.exists())
-					return fs.getPath();
-			}
-		}
-		else {
+                int k = 2;
+                //todo ugly
+                while (true){
+                    String newPath = String.format("%s(%d)%s", fileNameBody, k++, fileNameExtension);
+                    fs.setPath(dirPath, newPath);
+                    if(!fs.exists())
+                        return fs.getPath();
+                }
+			} else {
+                fs.clearFile();
+            }
+		} else {
 			fs.setPath(fs.getParentDir());
 			if(!fs.exists())
 				fs.createDirectoryRecursive();

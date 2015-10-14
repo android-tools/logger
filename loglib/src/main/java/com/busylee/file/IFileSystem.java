@@ -82,4 +82,6 @@ public interface IFileSystem {
 	void storeByteArray(byte[] buffer);
 
 	String getMimeType();
+
+	void clearFile();
 }

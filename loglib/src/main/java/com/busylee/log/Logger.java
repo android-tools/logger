@@ -39,6 +39,10 @@ public class Logger {
 
 	static final Map<String, String> mPhoneInfoMap = new HashMap<>();
 
+	public static void init() {
+		ExceptionHandler.init();
+	}
+
 	enum LogLevel {
 		EInfo("I"),
 		EVerbose("V"),

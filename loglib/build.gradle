@@ -1,4 +1,17 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.novoda:bintray-release:0.3.4'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 23
@@ -20,4 +33,13 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+publish {
+    groupId = 'com.github.android-tools'
+    artifactId = 'logger'
+    publishVersion = '1.0.0'
+    desc = 'Android logger library with function of storing info to file'
+    licences = ['Apache-2.0']
+    website = 'https://github.com/android-tools/logger'
 }

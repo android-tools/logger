@@ -1,6 +1,6 @@
-package com.busylee.file;
+package com.github.logger.file;
 
-import com.busylee.log.Logger;
+import com.github.logger.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;

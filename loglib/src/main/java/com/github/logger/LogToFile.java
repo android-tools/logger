@@ -1,9 +1,7 @@
-package com.busylee.log;
+package com.github.logger;
 
 import android.text.TextUtils;
 import android.util.Log;
-
-import com.busylee.file.FileSystem;
 
 import java.io.BufferedWriter;
 import java.io.File;

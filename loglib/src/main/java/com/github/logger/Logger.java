@@ -13,11 +13,11 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-package com.busylee.log;
+package com.github.logger;
 
 import android.os.Build;
 
-import com.busylee.file.FileSystem;
+import com.github.logger.file.FileSystem;
 
 import java.util.Calendar;
 import java.util.HashMap;

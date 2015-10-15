@@ -1,4 +1,4 @@
-package com.busylee.log;
+package com.github.logger;
 
 /**
  * Created by busylee on 14.10.15.

@@ -1,4 +1,4 @@
-package com.busylee.log;
+package com.github.logger.log;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
